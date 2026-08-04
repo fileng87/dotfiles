@@ -7,7 +7,7 @@ Cross-platform Windows and Linux dotfiles managed by [chezmoi](https://www.chezm
 - Starship prompt with PowerShell and Zsh-specific right-prompt behavior
 - PowerShell profile with transient prompts, zoxide, mise, and lsd aliases
 - Zsh initialization and matching aliases
-- mise-managed development tools and language runtimes
+- mise-managed language runtimes and development package managers
 - Git identity and editor through machine-local chezmoi data
 
 Windows Terminal settings, credentials, SSH private keys, tokens, and shell history are intentionally not managed.
@@ -31,7 +31,7 @@ The first apply installs core CLI tools through Scoop and installs JetBrainsMono
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply fileng87
 ```
 
-The bootstrap script supports `apt-get`, `dnf`, and `pacman`. It installs the base shell requirements and mise; mise then installs the remaining CLI tools and language runtimes.
+The bootstrap script supports `apt-get`, `dnf`, and `pacman`. The operating system package manager installs general CLI tools such as zoxide, lsd, fzf, ripgrep, and bat. mise only installs development runtimes and their package managers.
 
 ## Daily workflow
 
