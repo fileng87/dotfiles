@@ -1,0 +1,14 @@
+{{- $gitName := promptStringOnce . "gitName" "Git user name" -}}
+{{- $gitEmail := promptStringOnce . "gitEmail" "Git email address" -}}
+
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[data]
+gitName = {{ $gitName | quote }}
+gitEmail = {{ $gitEmail | quote }}
+
+{{- if eq .chezmoi.os "windows" }}
+[interpreters.ps1]
+command = "powershell"
+args = ["-NoLogo", "-NoProfile"]
+{{- end }}

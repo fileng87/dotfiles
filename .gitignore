@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.p12
+.chezmoi.toml

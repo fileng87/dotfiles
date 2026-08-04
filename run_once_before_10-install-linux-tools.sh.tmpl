@@ -1,0 +1,34 @@
+{{- if eq .chezmoi.os "linux" }}
+#!/bin/sh
+set -eu
+
+if [ "$(id -u)" -eq 0 ]; then
+    SUDO=''
+elif command -v sudo >/dev/null 2>&1; then
+    SUDO='sudo'
+else
+    echo 'sudo is required to install system packages' >&2
+    exit 1
+fi
+
+if command -v apt-get >/dev/null 2>&1; then
+    $SUDO apt-get update
+    $SUDO apt-get install -y git curl unzip zsh
+elif command -v dnf >/dev/null 2>&1; then
+    $SUDO dnf install -y git curl unzip zsh
+elif command -v pacman >/dev/null 2>&1; then
+    $SUDO pacman -S --needed --noconfirm git curl unzip zsh
+else
+    echo 'Unsupported Linux package manager: expected apt-get, dnf, or pacman' >&2
+    exit 1
+fi
+
+if ! command -v mise >/dev/null 2>&1; then
+    installer=$(mktemp)
+    trap 'rm -f "$installer"' EXIT HUP INT TERM
+    curl -fsSL https://mise.run -o "$installer"
+    sh "$installer"
+    rm -f "$installer"
+    trap - EXIT HUP INT TERM
+fi
+{{- end }}

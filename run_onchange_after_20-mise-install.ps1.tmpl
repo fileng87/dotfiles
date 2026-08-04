@@ -1,0 +1,9 @@
+{{- if eq .chezmoi.os "windows" }}
+# mise config hash: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
+$ErrorActionPreference = 'Stop'
+
+& mise install
+if ($LASTEXITCODE -ne 0) {
+    throw 'mise install failed'
+}
+{{- end }}

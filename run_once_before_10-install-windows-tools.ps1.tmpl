@@ -1,0 +1,50 @@
+{{- if eq .chezmoi.os "windows" }}
+$ErrorActionPreference = 'Stop'
+
+if ($PSVersionTable.PSEdition -eq 'Desktop') {
+    $windowsModules = Join-Path $env:WINDIR 'System32\WindowsPowerShell\v1.0\Modules'
+    $env:PSModulePath = "$windowsModules;$env:PSModulePath"
+}
+
+if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+    Invoke-RestMethod -Uri 'https://get.scoop.sh' | Invoke-Expression
+}
+
+$apps = @(
+    'git',
+    'pwsh',
+    'starship',
+    'mise',
+    'zoxide',
+    'lsd',
+    'fzf',
+    'ripgrep',
+    'bat'
+)
+
+foreach ($app in $apps) {
+    & scoop install $app
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to install Scoop app: $app"
+    }
+}
+
+$fontDirectory = Join-Path $env:LOCALAPPDATA 'Microsoft\Windows\Fonts'
+$jetBrainsNerdFont = Get-ChildItem -LiteralPath $fontDirectory -Filter 'JetBrainsMono*NerdFont*.ttf' -ErrorAction SilentlyContinue
+
+if (-not $jetBrainsNerdFont) {
+    $nerdFontsBucket = & scoop bucket list | Select-String '^\s*nerd-fonts\s'
+    if (-not $nerdFontsBucket) {
+        & scoop bucket add nerd-fonts
+        if ($LASTEXITCODE -ne 0) {
+            throw 'Failed to add the nerd-fonts Scoop bucket'
+        }
+    }
+
+    & scoop install nerd-fonts/JetBrainsMono-NF
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Failed to install JetBrainsMono Nerd Font'
+    }
+}
+{{- end }}

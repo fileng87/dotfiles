@@ -1,0 +1,18 @@
+[tools]
+bun = "latest"
+node = "24"
+npm = "latest"
+pnpm = "latest"
+python = "3.10"
+rust = "latest"
+uv = "latest"
+yarn = "1"
+
+{{- if eq .chezmoi.os "linux" }}
+"github:starship/starship" = "latest"
+"github:ajeetdsouza/zoxide" = "latest"
+"github:lsd-rs/lsd" = "latest"
+"github:junegunn/fzf" = "latest"
+"github:BurntSushi/ripgrep" = "latest"
+"github:sharkdp/bat" = "latest"
+{{- end }}

@@ -1,0 +1,62 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+{{- if eq .chezmoi.os "windows" }}
+format = """
+[╭─](bold #7f849c) $directory$git_branch$git_status$all$fill$cmd_duration$time [─╮](bold #7f849c)
+[╰─](bold #7f849c) $character\u001b7\u001b\\[999C\u001b\\[1D[─╯](bold #7f849c)\u001b8"""
+{{- else }}
+format = """
+[╭─](bold #7f849c) $directory$git_branch$git_status$all$fill$cmd_duration$time [─╮](bold #7f849c)
+[╰─](bold #7f849c) $character"""
+right_format = '[─╯](bold #7f849c)'
+{{- end }}
+
+[line_break]
+disabled = true
+
+[username]
+disabled = true
+
+[package]
+format = '[$symbol$version]($style) '
+
+[directory]
+format = '[  $path]($style) '
+style = 'bold blue'
+truncation_length = 3
+truncate_to_repo = false
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+symbol = ' '
+style = 'bold purple'
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = 'bold yellow'
+
+[fill]
+symbol = '─'
+style = 'bold #7f849c'
+
+[cmd_duration]
+min_time = 2000
+format = '[ 󰔛 $duration]($style)'
+style = 'bold yellow'
+
+[time]
+disabled = false
+format = '[ $time]($style)'
+time_format = '%H:%M'
+style = 'bold cyan'
+
+[character]
+format = '$symbol '
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
+vimcmd_symbol = '[❮](bold yellow)'
+vimcmd_replace_one_symbol = '[❮](bold purple)'
+vimcmd_replace_symbol = '[❮](bold purple)'
+vimcmd_visual_symbol = '[❮](bold cyan)'

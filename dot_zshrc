@@ -1,0 +1,9 @@
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(mise activate zsh)"
+
+alias ls='lsd'
+alias ll='lsd -l'
+alias la='lsd -a'
+alias lla='lsd -la'
+alias lt='lsd --tree'
