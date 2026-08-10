@@ -14,7 +14,20 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     }
 
     $installerPath = Join-Path $env:TEMP $asset.name
-    Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $installerPath
+    Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $installerPath -UseBasicParsing
+
+    $checksumLine = ($release.body -split "`r?`n") | Where-Object { $_ -match [regex]::Escape($asset.name) + '\s*\|\s*[0-9a-fA-F]{64}\s*$' } | Select-Object -First 1
+    if (-not $checksumLine) {
+        Remove-Item -LiteralPath $installerPath -Force -ErrorAction SilentlyContinue
+        throw "Could not find a published SHA-256 checksum for $($asset.name)"
+    }
+
+    $expectedHash = ($checksumLine -split '\|')[1].Trim()
+    $actualHash = (Get-FileHash -LiteralPath $installerPath -Algorithm SHA256).Hash
+    if ($actualHash -ne $expectedHash) {
+        Remove-Item -LiteralPath $installerPath -Force -ErrorAction SilentlyContinue
+        throw "Git for Windows installer checksum mismatch (expected $expectedHash, got $actualHash)"
+    }
 
     $installerArgs = '/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS'
     $installer = Start-Process -FilePath $installerPath -ArgumentList $installerArgs -Wait -PassThru
