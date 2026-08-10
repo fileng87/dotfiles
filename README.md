@@ -23,7 +23,7 @@ scoop install chezmoi
 chezmoi init --apply fileng87
 ```
 
-The first apply installs core CLI tools through Scoop and installs JetBrainsMono Nerd Font when it is missing.
+The first apply downloads and silently installs the official Git for Windows installer (if not already present), installs other core CLI tools through Scoop, and installs JetBrainsMono Nerd Font when it is missing.
 
 ### Linux
 
