@@ -6,13 +6,33 @@ if ($PSVersionTable.PSEdition -eq 'Desktop') {
     $env:PSModulePath = "$windowsModules;$env:PSModulePath"
 }
 
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    $release = Invoke-RestMethod -Uri 'https://api.github.com/repos/git-for-windows/git/releases/latest' -Headers @{ 'User-Agent' = 'chezmoi-bootstrap' }
+    $asset = $release.assets | Where-Object { $_.name -like '*-64-bit.exe' } | Select-Object -First 1
+    if (-not $asset) {
+        throw 'Could not find the Git for Windows 64-bit installer asset'
+    }
+
+    $installerPath = Join-Path $env:TEMP $asset.name
+    Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $installerPath
+
+    $installerArgs = '/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS'
+    $installer = Start-Process -FilePath $installerPath -ArgumentList $installerArgs -Wait -PassThru
+    Remove-Item -LiteralPath $installerPath -Force -ErrorAction SilentlyContinue
+
+    if ($installer.ExitCode -ne 0) {
+        throw "Failed to install Git for Windows (exit code $($installer.ExitCode))"
+    }
+
+    $env:PATH = "$env:ProgramFiles\Git\cmd;$env:PATH"
+}
+
 if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
     Invoke-RestMethod -Uri 'https://get.scoop.sh' | Invoke-Expression
 }
 
 $apps = @(
-    'git',
     'pwsh',
     'starship',
     'mise',
