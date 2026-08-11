@@ -9,6 +9,7 @@ Cross-platform Windows and Linux dotfiles managed by [chezmoi](https://www.chezm
 - Zsh initialization and matching aliases
 - mise-managed language runtimes and development package managers
 - Git identity and editor through machine-local chezmoi data
+- 小狼毫 (Weasel/Rime) appearance customization (Windows only)
 
 Windows Terminal settings, credentials, SSH private keys, tokens, and shell history are intentionally not managed.
 
