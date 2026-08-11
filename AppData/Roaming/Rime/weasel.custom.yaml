@@ -8,7 +8,7 @@
 #   - 如果之後想改回小狼毫預設外觀，把這個檔案清空存檔即可
 
 patch:
-  style:
+  "style/+":
     color_scheme: win11_light
     color_scheme_dark: win11_dark
 
@@ -34,7 +34,7 @@ patch:
       shadow_offset_x: 0
       shadow_offset_y: 4
 
-  preset_color_schemes:
+  "preset_color_schemes/+":
     win11_light:
       name: "Windows 11／Light"
       author: "custom"
