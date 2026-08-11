@@ -70,7 +70,7 @@ patch:
       candidate_text_color: 0xE4E4E4
       candidate_back_color: 0x2B2B2B
       candidate_shadow_color: 0x00000000
-      hilited_candidate_text_color: 0xFFFFFF        # 深色模式選中文字：白色
+      hilited_candidate_text_color: 0xFFC24C        # 深色模式強調藍 #4CC2FF（Win11 深色主題常用亮藍）
       hilited_candidate_back_color: 0x4A3821
       hilited_candidate_shadow_color: 0x00000000
       comment_text_color: 0xA0A0A0
