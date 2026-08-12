@@ -18,6 +18,7 @@ patch:
 
     mark_text: ""            # 留空 + hilited_mark_color 才會畫出左側色塊
     hover_type: hilite        # 滑鼠移到候選字上也會反白，體驗更貼近系統選單
+    inline_preedit: true      # 組字區（緩衝區）內嵌在游標處顯示，候選字視窗不再多一行組字列
 
     layout:
       min_width: 120          # 預設 160，中幅縮小
