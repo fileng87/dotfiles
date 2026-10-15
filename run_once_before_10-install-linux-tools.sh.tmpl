@@ -17,7 +17,7 @@ if command -v apt-get >/dev/null 2>&1; then
 elif command -v dnf >/dev/null 2>&1; then
     $SUDO dnf install -y ca-certificates git curl unzip zsh zoxide lsd fzf ripgrep bat
 elif command -v pacman >/dev/null 2>&1; then
-    $SUDO pacman -S --needed --noconfirm ca-certificates git curl unzip zsh starship zoxide lsd fzf ripgrep bat
+    $SUDO pacman -S --needed --noconfirm ca-certificates git curl unzip zsh zoxide lsd fzf ripgrep bat
 else
     echo 'Unsupported Linux package manager: expected apt-get, dnf, or pacman' >&2
     exit 1
@@ -30,12 +30,12 @@ if ! command -v bat >/dev/null 2>&1 && command -v batcat >/dev/null 2>&1; then
     ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
 fi
 
-if ! command -v starship >/dev/null 2>&1; then
-    starship_installer=$(mktemp)
-    trap 'rm -f "$starship_installer"' EXIT HUP INT TERM
-    curl -fsSL https://starship.rs/install.sh -o "$starship_installer"
-    sh "$starship_installer" --yes --bin-dir "$HOME/.local/bin"
-    rm -f "$starship_installer"
+if ! command -v oh-my-posh >/dev/null 2>&1; then
+    posh_installer=$(mktemp)
+    trap 'rm -f "$posh_installer"' EXIT HUP INT TERM
+    curl -fsSL https://ohmyposh.dev/install.sh -o "$posh_installer"
+    bash "$posh_installer" -d "$HOME/.local/bin"
+    rm -f "$posh_installer"
     trap - EXIT HUP INT TERM
 fi
 

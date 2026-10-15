@@ -1,6 +1,5 @@
 export PATH="$HOME/.local/bin:$PATH"
 
-eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(mise activate zsh)"
 
@@ -9,3 +8,5 @@ alias ll='lsd -l'
 alias la='lsd -a'
 alias lla='lsd -la'
 alias lt='lsd --tree'
+
+eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/p10k-lean-frame.omp.json")"

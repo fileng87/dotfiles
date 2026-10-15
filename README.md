@@ -4,8 +4,9 @@ Cross-platform Windows and Linux dotfiles managed by [chezmoi](https://www.chezm
 
 ## Managed configuration
 
-- Starship prompt with PowerShell and Zsh-specific right-prompt behavior
-- PowerShell profile with transient prompts, zoxide, mise, and lsd aliases
+- Oh My Posh prompt inspired by Powerlevel10k Lean, with a two-line frame, Git status, and time (streaming disabled)
+- Previous Starship configuration retained for reference
+- PowerShell profile with zoxide, mise, and lsd aliases
 - Zsh initialization and matching aliases
 - mise-managed language runtimes and development package managers
 - Git identity and editor through machine-local chezmoi data
@@ -46,7 +47,7 @@ chezmoi apply
 Edit a managed file:
 
 ```sh
-chezmoi edit ~/.config/starship.toml
+chezmoi edit ~/.config/oh-my-posh/p10k-lean-frame.omp.json
 chezmoi diff
 chezmoi apply
 ```

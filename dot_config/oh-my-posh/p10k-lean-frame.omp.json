@@ -1,0 +1,97 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 4,
+  "async": false,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#7f849c",
+          "template": "╭─ "
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "#77E4F7",
+          "template": "{{ .Path }} ",
+          "options": {
+            "style": "full"
+          }
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "#a6e3a1",
+          "template": "{{ .HEAD }}{{ if .Working.Changed }} <#FFE700>{{ .Working.String }}</>{{ end }}{{ if .Staging.Changed }} <#FFE700>+{{ .Staging.String }}</>{{ end }} ",
+          "options": {
+            "branch_icon": " "
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "filler": "<#7f849c>─</>",
+      "overflow": "hide",
+      "segments": [
+        {
+          "type": "time",
+          "style": "plain",
+          "foreground": "#00C5C7",
+          "template": " {{ .CurrentDate | date .Format }} ",
+          "options": {
+            "time_format": "15:04"
+          }
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#7f849c",
+          "template": "─╮"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#7f849c",
+          "template": "╰─ "
+        },
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "#43D426",
+          "template": "❯ ",
+          "options": {
+            "always_enabled": true
+          },
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#f38ba8{{ end }}"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rprompt",
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#7f849c",
+          "template": "─╯"
+        }
+      ]
+    }
+  ]
+}
