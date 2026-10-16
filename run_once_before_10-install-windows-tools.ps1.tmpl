@@ -62,6 +62,13 @@ foreach ($app in $apps) {
     }
 }
 
+# Make mise-managed tools available to cmd.exe and other non-activated processes.
+$miseShims = "$env:LOCALAPPDATA\mise\shims"
+$userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+if (($userPath -split ';') -notcontains $miseShims) {
+    [Environment]::SetEnvironmentVariable('Path', "$miseShims;$userPath", 'User')
+}
+
 $fontDirectory = Join-Path $env:LOCALAPPDATA 'Microsoft\Windows\Fonts'
 $jetBrainsNerdFont = Get-ChildItem -LiteralPath $fontDirectory -Filter 'JetBrainsMono*NerdFont*.ttf' -ErrorAction SilentlyContinue
 
