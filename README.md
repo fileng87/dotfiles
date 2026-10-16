@@ -70,3 +70,11 @@ chezmoi update
 ## Machine-local data
 
 During initialization, chezmoi prompts for the Git user name and email address. These values are stored in the local chezmoi configuration and are rendered into `~/.gitconfig`; they are not committed to this repository.
+
+## Windows mise shell setup
+
+PowerShell 7 and Windows PowerShell 5.1 use mise activation. In 5.1 the environment updates at the next prompt; immediate directory-change updates require PowerShell 7.
+
+Git Bash loads mise from .bashrc, sourced by .bash_profile for login shells. Use mise 2026.10.11 or newer on Windows; an older installation produced a Windows-style PATH inside Bash and hid tools such as rtk. Update existing Scoop installations with: scoop update mise.
+
+The Windows bootstrap adds %LOCALAPPDATA%\mise\shims to the user PATH for cmd.exe. Shims select project tool versions but do not apply mise [env] variables to the parent shell. Open a new terminal after changing the user PATH.
